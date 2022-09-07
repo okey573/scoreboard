@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Input, Button, message } from 'antd'
-import { MAX_PLAYERS } from '../constants'
 
 const PlayerInput: React.FC<{
   addPlayer: (player: string) => number
