@@ -1,5 +1,5 @@
 import React from 'react'
-import Grouper from './views/grouper/index'
+import Grouper from './views'
 import './App.css'
 
 function App() {

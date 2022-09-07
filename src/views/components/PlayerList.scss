@@ -1,0 +1,15 @@
+.player-list {
+  margin: 10px 0;
+
+  :global {
+    .ant-tag {
+      font-size: 16px;
+      color: red;
+
+      .ant-tag-close-icon {
+        font-size: 14px;
+      }
+    }
+
+  }
+}
