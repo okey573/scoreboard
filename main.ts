@@ -11,7 +11,7 @@ function createWindow() {
     }
   })
 
-  // win.loadFile('index.html')
+  // win.loadFile(path.join(__dirname, './build/index.html'))
   win.loadURL('http://localhost:3000/')
 }
 
