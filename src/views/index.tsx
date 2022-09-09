@@ -1,14 +1,14 @@
 import React from 'react'
 import { Tabs } from 'antd'
-import Random from './random'
+import Scoreboard from './scoreboard'
 import Assign from './assign'
 
 const Grouper: React.FC = function () {
   const tabItems = [
     {
-      label: '4V4',
-      key: 'random',
-      children: <Random />
+      label: '点将计分板',
+      key: 'scoreboard',
+      children: <Scoreboard />
     },
     {
       label: '点将',

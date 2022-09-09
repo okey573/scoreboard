@@ -38,7 +38,17 @@ export const usePlayerInput: () => {
   setPlayers: React.Dispatch<React.SetStateAction<string[]>>,
   addPlayer: (player: string) => number
 } = function () {
-  const [players, setPlayers] = useState<string[]>([])
+  // TODO revert
+  const [players, setPlayers] = useState<string[]>([
+    '温柔',
+    '老仇',
+    '月海',
+    '脸哥',
+    '59',
+    'A酱',
+    '阿亮',
+    '阿抬'
+  ])
   const addPlayer: (player: string) => number = (player: string) => {
     if (players.includes(player)) {
       message.error(`${ player }已存在于玩家列表中`)

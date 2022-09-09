@@ -4,16 +4,18 @@ import './PlayerList.scss'
 
 const PlayerList: React.FC<{
   playerList: string[],
-  removePlayer: (player: string) => void
-}> = function ({ playerList, removePlayer }) {
+  removePlayer?: (player: string) => void,
+  closable?: boolean
+}> = function ({ playerList, removePlayer, closable }) {
+  closable = closable ?? true
   const onClose = (player: string) => {
-    removePlayer(player)
+    removePlayer!(player)
   }
   return (
     <div className="player-list">
       {
         playerList.map((player, index) => {
-          return <Tag key={ player } closable onClose={ () => onClose(player) }>
+          return <Tag key={ player } closable={ closable } onClose={ () => onClose(player) }>
             { player }
           </Tag>
         })

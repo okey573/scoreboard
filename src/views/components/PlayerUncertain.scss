@@ -1,0 +1,23 @@
+.player-uncertain {
+  margin: 20px;
+  height: 60px;
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  border: 1px dashed #d7cbbd;
+  box-shadow: 2px 2px 5px #d7cbbd;
+  cursor: pointer;
+
+  .plus-icon {
+    font-size: 30px;
+    color: #69454f;
+  }
+
+  .player-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #69454f;
+  }
+}
