@@ -1,16 +1,19 @@
-import React from 'react'
-import { PlusOutlined } from '@ant-design/icons'
+import React, { useState } from 'react'
 import './PlayerUncertain.scss'
 
-type SelectFn = {
-  selectFn: () => void
+type PlayerUncertainRest = {
+  selectFn: (player: string) => void,
+  draggingPlayer?: string,
+  index: number
 }
 
-const PlayerUncertain: React.FC<PlayerUncertain & SelectFn> = function (
+const PlayerUncertain: React.FC<PlayerUncertain & PlayerUncertainRest> = function (
   {
     status,
     name,
-    selectFn
+    selectFn,
+    draggingPlayer,
+    index
   }
 ) {
 
@@ -18,14 +21,30 @@ const PlayerUncertain: React.FC<PlayerUncertain & SelectFn> = function (
   if (status === 'ready') {
     content = <span className="player-name">{ name }</span>
   } else {
-    content = <PlusOutlined className="plus-icon" />
+    content = <span className="plus-ready">{ index === 0 ? 'Cap' : `${index + 1}st`}</span>
   }
 
-  const onClick = () => {
-    selectFn()
+  const [active, setActive] = useState<boolean>(false)
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault()
+    setActive(true)
+  }
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault()
+    setActive(false)
+  }
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    selectFn(draggingPlayer!)
+    setActive(false)
   }
 
-  return <div className="player-uncertain" onClick={ onClick }>
+  return <div className={ `player-uncertain ${ active && 'player-uncertain-active' }` }
+              onDragEnter={ handleDragEnter }
+              onDragLeave={ handleDragLeave }
+              onDragOver={ handleDragEnter }
+              onDrop={ handleDrop }>
     { content }
   </div>
 }

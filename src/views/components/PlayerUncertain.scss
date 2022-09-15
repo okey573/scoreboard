@@ -7,12 +7,13 @@
   justify-content: center;
   border-radius: 5px;
   border: 1px dashed #d7cbbd;
-  box-shadow: 2px 2px 5px #d7cbbd;
-  cursor: pointer;
+  //box-shadow: 2px 2px 5px #d7cbbd;
+  //cursor: pointer;
 
-  .plus-icon {
-    font-size: 30px;
+  .plus-ready {
+    font-size: 20px;
     color: #69454f;
+    opacity: 0.5;
   }
 
   .player-name {
@@ -20,4 +21,9 @@
     font-size: 16px;
     color: #69454f;
   }
+}
+
+.player-uncertain-active {
+  cursor: copy;
+  background-color: #c2f3c8;
 }

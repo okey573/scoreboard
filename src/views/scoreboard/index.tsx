@@ -25,13 +25,13 @@ const Scoreboard: React.FC = function () {
     const all: Player[] = players.map(name => {
       return {
         status: 'uncertain',
-        name,
+        name: undefined,
         kill: 0,
         death: 0,
         allKillTimes: 0,
         isCaptain: false,
         serial: 0
-      } as unknown as Player
+      } as Player
     })
     // TODO
     const redTeam = all.splice(0, MAX_PLAYERS / 2)
@@ -43,6 +43,13 @@ const Scoreboard: React.FC = function () {
     setIsStart(false)
   }
 
+  const [draggingPlayer, setDraggingPlayer] = useState<string | undefined>(undefined)
+  const handleDragStart = (name: string) => {
+    setDraggingPlayer(name)
+  }
+  const handleDragEnd = () => {
+    setDraggingPlayer(undefined)
+  }
   const notStart = <>
     <PlayerInput addPlayer={ addPlayer } disabledAddButton={ disabledAddButton } />
     <PlayerList playerList={ players } removePlayer={ removePlayer } />
@@ -52,14 +59,29 @@ const Scoreboard: React.FC = function () {
   </>
 
   const alreadyStarted = <>
-    <PlayerList playerList={ players } closable={ false } />
+    <PlayerList playerList={ players } closable={ false } handleDragStart={ handleDragStart } handleDragEnd={ handleDragEnd } />
     <Button onClick={ reStart } type={ 'primary' } style={ { width: '100%' } } danger>重选玩家</Button>
   </>
 
-  const selectFn = (teamCode: string, index: number) => {
-    const team = teamCode === 'blue' ? blueTeam : redTeam
-    const setter = teamCode === 'blue' ? setBlueTeam : setRedTeam
-    // TODO
+  const selectFn = (teamCode: string, index: number, playerName: string) => {
+    const [setter, reSetter] = teamCode === 'blue' ? [setBlueTeam, setRedTeam] : [setRedTeam, setBlueTeam]
+    setter(team => team.map((item, idx) => {
+      if (index === idx) {
+        return Object.assign({}, item, { name: playerName, status: 'ready' })
+      }
+      if (item.name === playerName) {
+        return Object.assign({}, item, { name: undefined, status: 'uncertain' })
+      } else {
+        return item
+      }
+    }))
+    reSetter(team => team.map((item, idx) => {
+      if (item.name === playerName) {
+        return Object.assign({}, item, { name: undefined, status: 'uncertain' })
+      } else {
+        return item
+      }
+    }))
   }
   const groupContent = <div className="group-content">
     <div className="group-content-left">
@@ -67,7 +89,7 @@ const Scoreboard: React.FC = function () {
         redTeam.map((player, index) => {
           if (player.status === 'certain') {
             return <PlayerBoard key={ index }
-                                name={ player.name }
+                                name={ player.name! }
                                 kill={ player.kill }
                                 death={ player.death }
                                 allKillTimes={ player.allKillTimes }
@@ -75,9 +97,11 @@ const Scoreboard: React.FC = function () {
                                 serial={ player.serial } />
           } else {
             return <PlayerUncertain key={ index }
+                                    index={ index }
                                     status={ player.status }
-                                    name={ player.name }
-                                    selectFn={ () => selectFn('red', index) } />
+                                    name={ player.name! }
+                                    draggingPlayer={ draggingPlayer }
+                                    selectFn={ (playerName: string) => selectFn('red', index, playerName) } />
           }
         })
       }
@@ -87,7 +111,7 @@ const Scoreboard: React.FC = function () {
         blueTeam.map((player, index) => {
           if (player.status === 'certain') {
             return <PlayerBoard key={ index }
-                                name={ player.name }
+                                name={ player.name! }
                                 kill={ player.kill }
                                 death={ player.death }
                                 allKillTimes={ player.allKillTimes }
@@ -95,9 +119,11 @@ const Scoreboard: React.FC = function () {
                                 serial={ player.serial } />
           } else {
             return <PlayerUncertain key={ index }
+                                    index={ index }
                                     status={ player.status }
-                                    name={ player.name }
-                                    selectFn={ () => selectFn('blue', index) } />
+                                    name={ player.name! }
+                                    draggingPlayer={ draggingPlayer }
+                                    selectFn={ (playerName: string) => selectFn('blue', index, playerName) } />
           }
         })
       }

@@ -2,7 +2,7 @@ declare type PlayerStatus = 'certain' | 'ready' | 'uncertain'
 
 declare type Player = {
   status: PlayerStatus,
-  name: string,
+  name: string | undefined,
   kill: number,
   death: number,
   allKillTimes: number,
