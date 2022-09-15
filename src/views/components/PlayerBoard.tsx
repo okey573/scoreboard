@@ -14,6 +14,7 @@ const PlayerBoard: React.FC<{
     name,
     kill,
     death,
+    allKillTimes,
     isCaptain,
     serial
   }
@@ -31,7 +32,7 @@ const PlayerBoard: React.FC<{
         </span>
       </div>
       <div className="all-kill-icons">
-        { new Array(serial).fill('').map((_, index) => <FireOutlined key={ index } className="all-kill-icon" />) }
+        { new Array(allKillTimes).fill('').map((_, index) => <FireOutlined key={ index } className="all-kill-icon" />) }
       </div>
     </div>
     <div className="kda">
