@@ -4,7 +4,8 @@ import './PlayerUncertain.scss'
 type PlayerUncertainRest = {
   selectFn: (player: string) => void,
   draggingPlayer?: string,
-  index: number
+  index: number,
+  forbidDrop?: boolean
 }
 
 const PlayerUncertain: React.FC<PlayerUncertain & PlayerUncertainRest> = function (
@@ -13,7 +14,8 @@ const PlayerUncertain: React.FC<PlayerUncertain & PlayerUncertainRest> = functio
     name,
     selectFn,
     draggingPlayer,
-    index
+    index,
+    forbidDrop
   }
 ) {
 
@@ -27,14 +29,17 @@ const PlayerUncertain: React.FC<PlayerUncertain & PlayerUncertainRest> = functio
   const [active, setActive] = useState<boolean>(false)
 
   const handleDragEnter = (e: React.DragEvent) => {
+    if (forbidDrop) return
     e.preventDefault()
     setActive(true)
   }
   const handleDragLeave = (e: React.DragEvent) => {
+    if (forbidDrop) return
     e.preventDefault()
     setActive(false)
   }
   const handleDrop = (e: React.DragEvent) => {
+    if (forbidDrop) return
     e.preventDefault()
     selectFn(draggingPlayer!)
     setActive(false)
