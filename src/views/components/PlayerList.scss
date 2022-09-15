@@ -1,15 +1,26 @@
 .player-list {
   margin: 10px 0;
 
-  :global {
-    .ant-tag {
-      font-size: 16px;
-      color: red;
+  .item-enter {
+    opacity: 0;
+  }
 
-      .ant-tag-close-icon {
-        font-size: 14px;
-      }
-    }
+  .item-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
 
+  .item-exit {
+    opacity: 0;
+  }
+
+  .item-exit-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+
+  .item-exit-done {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
   }
 }

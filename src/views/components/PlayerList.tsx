@@ -1,6 +1,7 @@
 import React from 'react'
 import { Tag } from 'antd'
 import './PlayerList.scss'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 const PlayerList: React.FC<{
   playerList: string[],
@@ -12,15 +13,17 @@ const PlayerList: React.FC<{
     removePlayer!(player)
   }
   return (
-    <div className="player-list">
+    <TransitionGroup className="player-list">
       {
         playerList.map((player, index) => {
-          return <Tag key={ player } closable={ closable } onClose={ () => onClose(player) }>
-            { player }
-          </Tag>
+          return <CSSTransition key={ player } timeout={ 500 } classNames="item">
+            <Tag closable={ closable } onClose={ () => onClose(player) }>
+              { player }
+            </Tag>
+          </CSSTransition>
         })
       }
-    </div>
+    </TransitionGroup>
   )
 }
 
