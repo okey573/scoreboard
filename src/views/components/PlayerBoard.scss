@@ -11,6 +11,7 @@ $all-kill-main-color: #ccabdb;
   border-radius: 5px;
   border: 1px solid #d7cbbd;
   box-shadow: 2px 2px 5px #d7cbbd;
+  user-select: none;
 
   .name {
     width: 80px;
@@ -54,9 +55,13 @@ $all-kill-main-color: #ccabdb;
       left: 0;
       right: 0;
 
-      .all-kill-icon {
+      .all-kill-icon, .add-all-kill-icon {
         font-size: 12px;
-        color: #C42675;
+        color: #c41344;
+      }
+
+      .add-all-kill-icon {
+        cursor: pointer;
       }
     }
   }

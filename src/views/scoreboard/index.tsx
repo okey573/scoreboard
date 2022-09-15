@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import PlayerInput, { usePlayerInput } from '../components/PlayerInput'
 import PlayerList, { usePlayerList } from '../components/PlayerList'
 import { Button } from 'antd'
@@ -92,6 +92,16 @@ const Scoreboard: React.FC = function () {
       }
     }))
   }
+
+  const modifyData = (setter: Dispatch<SetStateAction<Player[]>>, index: number, num: number, keyType: 'death' | 'kill' | 'allKillTimes') => {
+    setter(team => team.map((player, idx) => {
+      if (index === idx) {
+        return Object.assign({}, player, { [keyType]: player[keyType] + num })
+      } else {
+        return player
+      }
+    }))
+  }
   const groupContent = <div className="group-content">
     <div className="group-content-left">
       {
@@ -103,7 +113,10 @@ const Scoreboard: React.FC = function () {
                                 death={ player.death }
                                 allKillTimes={ player.allKillTimes }
                                 isCaptain={ player.isCaptain }
-                                serial={ player.serial } />
+                                serial={ player.serial }
+                                modifyAllKillTimes={ (num) => modifyData(setRedTeam, index, num, 'allKillTimes') }
+                                modifyKill={ (num) => modifyData(setRedTeam, index, num, 'kill') }
+                                modifyDeath={ (num) => modifyData(setRedTeam, index, num, 'death') }/>
           } else {
             return <PlayerUncertain key={ index }
                                     index={ index }
@@ -126,7 +139,10 @@ const Scoreboard: React.FC = function () {
                                 death={ player.death }
                                 allKillTimes={ player.allKillTimes }
                                 isCaptain={ player.isCaptain }
-                                serial={ player.serial } />
+                                serial={ player.serial }
+                                modifyAllKillTimes={ (num) => modifyData(setBlueTeam, index, num, 'allKillTimes') }
+                                modifyKill={ (num) => modifyData(setBlueTeam, index, num, 'kill') }
+                                modifyDeath={ (num) => modifyData(setBlueTeam, index, num, 'death') } />
           } else {
             return <PlayerUncertain key={ index }
                                     index={ index }
