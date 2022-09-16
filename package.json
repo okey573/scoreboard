@@ -4,6 +4,7 @@
   "private": true,
   "main": "main.ts",
   "author": "Kuang Ruifeng",
+  "homepage": ".",
   "description": "A grouper",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
